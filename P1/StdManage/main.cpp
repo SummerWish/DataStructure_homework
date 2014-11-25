@@ -43,8 +43,10 @@ void printRecord(Student std)
     cout << setw(10);
     if (std.gender == GENDER_MALE) {
         cout << "male";
-    } else {
+    } else if (std.gender == GENDER_FEMALE) {
         cout << "female";
+    } else {
+        cout << "other";
     }
     cout << setw(10) << std.age;
     cout << setw(10) << std.type;
@@ -55,8 +57,8 @@ void printRecords()
 {
     cout << left;
     cout << setw(10) << "ID" << setw(10) << "Name" << setw(10) << "Gender" << setw(10) << "Age" << setw(10) << "Type" << endl;
-    for (Student std : records) {
-        printRecord(std);
+    for (list<Student>::iterator it = records.begin(); it != records.end(); ++it) {
+        printRecord(*it);
     }
 }
 
@@ -78,9 +80,11 @@ int main(int argc, const char * argv[])
         std.id = id;
         std.age = age;
         std.name = name;
-        if (gender == "男" || gender == "male") {
+        if (gender.size() == 0) {
+            std.gender = GENDER_OTHER;
+        } else if (gender == "男" || gender[0] == 'm' || gender[0] == 'M') {
             std.gender = GENDER_MALE;
-        } else if (gender == "女" || gender == "female") {
+        } else if (gender == "女" || gender[0] == 'f' || gender[0] == 'F') {
             std.gender = GENDER_FEMALE;
         } else {
             std.gender = GENDER_OTHER;
@@ -111,7 +115,7 @@ int main(int argc, const char * argv[])
                 cout << "0: insert at head, -1: insert at tail, N: insert after the Nth record" << endl;
                 cout << ">> ";
                 int n; cin >> n;
-                if (n < -1 || n > records.size()) {
+                if (n < -1 || n > (int)records.size()) {
                     cout << "Invalid position!" << endl;
                     break;
                 }
@@ -141,7 +145,7 @@ int main(int argc, const char * argv[])
                 if (n == -1) {
                     n = (int)records.size();
                 }
-                auto it = records.begin();
+                list<Student>::iterator it = records.begin();
                 for (int i = 0; i < n; ++i, ++it);
                 
                 records.insert(it, std);
@@ -158,7 +162,7 @@ int main(int argc, const char * argv[])
                 cout << ">> "; int id; cin >> id;
                 
                 bool ok = false;
-                for (auto it = records.begin(); it != records.end(); ++it) {
+                for (list<Student>::iterator it = records.begin(); it != records.end(); ++it) {
                     if (it->id == id) {
                         ok = true;
                         cout << "Deleted: ";
@@ -182,7 +186,7 @@ int main(int argc, const char * argv[])
                 cout << ">> "; int id; cin >> id;
                 
                 bool ok = false;
-                for (auto it = records.begin(); it != records.end(); ++it) {
+                for (list<Student>::iterator it = records.begin(); it != records.end(); ++it) {
                     if (it->id == id) {
                         ok = true;
                         cout << "Found: ";
@@ -202,7 +206,7 @@ int main(int argc, const char * argv[])
                 cout << ">> "; int id; cin >> id;
                 
                 bool ok = false;
-                for (auto it = records.begin(); it != records.end(); ++it) {
+                for (list<Student>::iterator it = records.begin(); it != records.end(); ++it) {
                     if (it->id == id) {
                         ok = true;
                         cout << "Found: ";
