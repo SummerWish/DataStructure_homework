@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include <vector>
-#include <cstdlib>
+#include <ctime>
 #include "util.h"
 #include "bubbleSort.h"
 #include "selectionSort.h"

@@ -105,6 +105,7 @@ const int OP_EXIT = 5;
 #include <vector>
 #include <sstream>
 #include <algorithm>
+#include <iterator>
 
 Node* root = NULL;
 
